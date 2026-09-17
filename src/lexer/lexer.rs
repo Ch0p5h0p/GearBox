@@ -116,8 +116,7 @@ pub fn read_tokens(code: &str) -> Vec<Result<Token, LexerError>> {
 
                         code_chars.next();
                     }
-
-                    Ok(Token::new(COMMENT, "//".to_string(), line))
+                    continue;
                 } else {
                     Ok(Token::new(SLASH, "/".to_string(), line))
                 }

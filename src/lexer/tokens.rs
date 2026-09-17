@@ -45,8 +45,6 @@ pub enum TokenType {
 
     // Special
     EOF,
-    COMMENT,
-    WHITESPACE,
 }
 
 pub struct Token {
