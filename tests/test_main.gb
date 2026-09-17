@@ -1,0 +1,9 @@
+type Point = {
+    x: int,
+    y: int,
+}
+
+defn greet = |x:str| print @ concat @ ("hello, ", str);
+
+let a = 1;
+a+2;
