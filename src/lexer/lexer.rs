@@ -18,6 +18,8 @@ pub fn read_tokens(code: &str) -> Vec<Result<Token, LexerError>> {
             // Single-char tokens
             '(' => Ok(Token::new(LeftParen, "(".to_string(), line)),
             ')' => Ok(Token::new(RightParen, ")".to_string(), line)),
+            '[' => Ok(Token::new(LeftBracket, "[".to_string(), line)),
+            ']' => Ok(Token::new(RightBracket, "]".to_string(), line)),
             '{' => Ok(Token::new(LeftBrace, "{".to_string(), line)),
             '}' => Ok(Token::new(RightBrace, "}".to_string(), line)),
             ',' => Ok(Token::new(Comma, ",".to_string(), line)),
