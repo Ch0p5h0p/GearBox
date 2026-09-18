@@ -1,3 +1,4 @@
+Reconstructed from token lexemes: 
 type Point = { x : int , y : int , } defn greet = | x : str | print @ concat @ ( "hello, " , str ) ; let a = 1 ; a + 2 ;  
----------- 
-IDENTIFIER IDENTIFIER EQUAL LEFT_BRACE IDENTIFIER COLON IDENTIFIER COMMA IDENTIFIER COLON IDENTIFIER COMMA RIGHT_BRACE IDENTIFIER IDENTIFIER EQUAL BAR IDENTIFIER COLON IDENTIFIER BAR IDENTIFIER AT IDENTIFIER AT LEFT_PAREN STRING COMMA IDENTIFIER RIGHT_PAREN SEMICOLON IDENTIFIER IDENTIFIER EQUAL NUMBER SEMICOLON IDENTIFIER PLUS NUMBER SEMICOLON EOF 
+Token type set
+IdentifierLit IdentifierLit Equal LeftBrace IdentifierLit Colon IdentifierLit Comma IdentifierLit Colon IdentifierLit Comma RightBrace IdentifierLit IdentifierLit Equal Bar IdentifierLit Colon IdentifierLit Bar IdentifierLit At IdentifierLit At LeftParen StringLit Comma IdentifierLit RightParen Semicolon IdentifierLit IdentifierLit Equal NumberLit Semicolon IdentifierLit Plus NumberLit Semicolon EOF 

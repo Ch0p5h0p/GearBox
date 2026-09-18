@@ -1,5 +1,3 @@
-// from https://craftinginterpreters.com/scanning.html
-
 use super::tokens::{Token, TokenType::*};
 use crate::debug::errors::*;
 
@@ -18,87 +16,87 @@ pub fn read_tokens(code: &str) -> Vec<Result<Token, LexerError>> {
 
         toks.push(match c {
             // Single-char tokens
-            '(' => Ok(Token::new(LEFT_PAREN, "(".to_string(), line)),
-            ')' => Ok(Token::new(RIGHT_PAREN, ")".to_string(), line)),
-            '{' => Ok(Token::new(LEFT_BRACE, "{".to_string(), line)),
-            '}' => Ok(Token::new(RIGHT_BRACE, "}".to_string(), line)),
-            ',' => Ok(Token::new(COMMA, ",".to_string(), line)),
-            '.' => Ok(Token::new(DOT, ".".to_string(), line)),
-            '-' => Ok(Token::new(DASH, "-".to_string(), line)),
-            '+' => Ok(Token::new(PLUS, "+".to_string(), line)),
-            ';' => Ok(Token::new(SEMICOLON, ";".to_string(), line)),
-            ':' => Ok(Token::new(COLON, ":".to_string(), line)),
-            '*' => Ok(Token::new(STAR, "*".to_string(), line)),
+            '(' => Ok(Token::new(LeftParen, "(".to_string(), line)),
+            ')' => Ok(Token::new(RightParen, ")".to_string(), line)),
+            '{' => Ok(Token::new(LeftBrace, "{".to_string(), line)),
+            '}' => Ok(Token::new(RightBrace, "}".to_string(), line)),
+            ',' => Ok(Token::new(Comma, ",".to_string(), line)),
+            '.' => Ok(Token::new(Dot, ".".to_string(), line)),
+            '-' => Ok(Token::new(Dash, "-".to_string(), line)),
+            '+' => Ok(Token::new(Plus, "+".to_string(), line)),
+            ';' => Ok(Token::new(Semicolon, ";".to_string(), line)),
+            ':' => Ok(Token::new(Colon, ":".to_string(), line)),
+            '*' => Ok(Token::new(Star, "*".to_string(), line)),
 
             // Single- or double-char tokens
             '!' => {
                 if code_chars.peek() == Some(&'=') {
                     code_chars.next();
-                    Ok(Token::new(BANG_EQUAL, "!=".to_string(), line))
+                    Ok(Token::new(BangEqual, "!=".to_string(), line))
                 } else {
-                    Ok(Token::new(BANG, "!".to_string(), line))
+                    Ok(Token::new(Bang, "!".to_string(), line))
                 }
             }
             '=' => {
                 if code_chars.peek() == Some(&'=') {
                     code_chars.next();
-                    Ok(Token::new(EQUAL_EQUAL, "==".to_string(), line))
+                    Ok(Token::new(DoubleEqual, "==".to_string(), line))
                 } else {
-                    Ok(Token::new(EQUAL, "=".to_string(), line))
+                    Ok(Token::new(Equal, "=".to_string(), line))
                 }
             }
             '>' => {
                 if code_chars.peek() == Some(&'=') {
                     code_chars.next();
-                    Ok(Token::new(GREATER_EQUAL, ">=".to_string(), line))
+                    Ok(Token::new(GreaterEqual, ">=".to_string(), line))
                 } else {
-                    Ok(Token::new(GREATER, ">".to_string(), line))
+                    Ok(Token::new(Greater, ">".to_string(), line))
                 }
             }
             '<' => {
                 if code_chars.peek() == Some(&'=') {
                     code_chars.next();
-                    Ok(Token::new(LESS, "<=".to_string(), line))
+                    Ok(Token::new(Less, "<=".to_string(), line))
                 } else {
-                    Ok(Token::new(LESS_EQUAL, "<".to_string(), line))
+                    Ok(Token::new(LessEqual, "<".to_string(), line))
                 }
             }
             '&' => {
                 if code_chars.peek() == Some(&'=') {
                     code_chars.next();
-                    Ok(Token::new(AMP_EQUAL, "&=".to_string(), line))
+                    Ok(Token::new(AmpEqual, "&=".to_string(), line))
                 } else if code_chars.peek() == Some(&'&') {
                     code_chars.next();
-                    Ok(Token::new(DOUBLE_AMP, "&&".to_string(), line))
+                    Ok(Token::new(DoubleAmp, "&&".to_string(), line))
                 } else {
-                    Ok(Token::new(AMPERSAND, "&".to_string(), line))
+                    Ok(Token::new(Ampersand, "&".to_string(), line))
                 }
             }
             '|' => {
                 if code_chars.peek() == Some(&'=') {
                     code_chars.next();
-                    Ok(Token::new(BAR_EQUAL, "|=".to_string(), line))
+                    Ok(Token::new(BarEqual, "|=".to_string(), line))
                 } else if code_chars.peek() == Some(&'|') {
                     code_chars.next();
-                    Ok(Token::new(DOUBLE_BAR, "||".to_string(), line))
+                    Ok(Token::new(DoubleBar, "||".to_string(), line))
                 } else {
-                    Ok(Token::new(BAR, "|".to_string(), line))
+                    Ok(Token::new(Bar, "|".to_string(), line))
                 }
             }
             '^' => {
                 if code_chars.peek() == Some(&'=') {
                     code_chars.next();
-                    Ok(Token::new(CARET_EQUAL, "^=".to_string(), line))
+                    Ok(Token::new(CaretEqual, "^=".to_string(), line))
                 } else {
-                    Ok(Token::new(CARET, "^".to_string(), line))
+                    Ok(Token::new(Caret, "^".to_string(), line))
                 }
             }
             '@' => {
                 if code_chars.peek() == Some(&'@') {
                     code_chars.next();
-                    Ok(Token::new(DOUBLE_AT, "@@".to_string(), line))
+                    Ok(Token::new(DoubleAt, "@@".to_string(), line))
                 } else {
-                    Ok(Token::new(AT, "@".to_string(), line))
+                    Ok(Token::new(At, "@".to_string(), line))
                 }
             }
 
@@ -118,7 +116,7 @@ pub fn read_tokens(code: &str) -> Vec<Result<Token, LexerError>> {
                     }
                     continue;
                 } else {
-                    Ok(Token::new(SLASH, "/".to_string(), line))
+                    Ok(Token::new(Slash, "/".to_string(), line))
                 }
             }
             '\n' => {
@@ -140,7 +138,7 @@ pub fn read_tokens(code: &str) -> Vec<Result<Token, LexerError>> {
                     if c == '"' {
                         string_chars.push('"');
                         break Ok(Token::new(
-                            STRING,
+                            StringLit,
                             string_chars.iter().collect::<String>(),
                             line,
                         ));
@@ -158,7 +156,7 @@ pub fn read_tokens(code: &str) -> Vec<Result<Token, LexerError>> {
                 let result = loop {
                     if code_chars.peek().is_none() || !code_chars.peek().unwrap().is_ascii_digit() {
                         break Ok(Token::new(
-                            NUMBER,
+                            NumberLit,
                             num_chars.iter().collect::<String>(),
                             line,
                         ));
@@ -179,7 +177,7 @@ pub fn read_tokens(code: &str) -> Vec<Result<Token, LexerError>> {
                         || !code_chars.peek().unwrap().is_ascii_alphanumeric()
                     {
                         break Ok(Token::new(
-                            IDENTIFIER,
+                            IdentifierLit,
                             ident_chars.iter().collect::<String>(),
                             line,
                         ));
