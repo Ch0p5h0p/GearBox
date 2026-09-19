@@ -9,7 +9,7 @@ pub fn interpret(code: String) {
         print!("{lexeme} ");
     }
 
-    println!("\nToken type set");
+    println!("\n\nToken type set");
 
     for tok in tokens.iter() {
         let tok_type = tok.get_type();

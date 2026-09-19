@@ -4,6 +4,7 @@ use std::fs;
 mod debug;
 mod interpreter;
 mod lexer;
+mod parser;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
