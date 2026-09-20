@@ -1,3 +1,3 @@
-# GearBox
+# Gearbox
 
-GearBox is my personal language for doing whatever funky language experiments cook up
+An ML-inspired low-level programming language
