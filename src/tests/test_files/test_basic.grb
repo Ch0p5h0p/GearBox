@@ -1,0 +1,6 @@
+let add_explicit = (a:int, b:int)[] => a + b;
+
+let greet = (name:str)[] print $ fmt "Hello, %s" [name];
+
+let constant = 23;
+let add_const = (n:int)[constant] => n+constant;

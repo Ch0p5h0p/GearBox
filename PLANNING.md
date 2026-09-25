@@ -26,8 +26,14 @@ Here are the types Gearbox has:
 | Unsigned 16 bit char | `uchar16` |
 | 32-bit float | `float32` |
 | 64-bit float | `float64` |
+| String | `str` |
 | Function | `(argtype, argtype)[capturetype, capturetype] -> returntype` |
+| Array | `[type]` |
 | Unit | `()` |
+| Void | `void` |
+| Pointer | `*` |
+
+*Note: Just like in C, `*` is a modifier. You do `type*` to make a pointer.*
 
 Each type also has a default that can be referenced via a different name. This is syntactic sugar, so the interpreter and compiler will still see `int32` or `char8`
 
@@ -48,6 +54,8 @@ let subtract = (a, b)[] => {return a - b};
 let nullproc = ()[] => 0;
 ```
 
+Functions can be called either with or without parenthesized arguments. Both `func(val)` and `func val` are valid.
+
 More complex function bodies have to be surrounded with curly braces (`{}`) in order to permit multiple statements.
 
 The square brackets are for variable capturing. In Gearbox, functions are intended to be entirely closed, meaning that any outside data a function wants to access has to be passed in via parameters. This could be a struggle for closures though, so captures have been added to functions to allow them to take in variables from the outside scope without having to have them passed in as arguments. For example:
@@ -65,6 +73,15 @@ let add_two = make_adder 2; // or make_adder(2);
 add_two 4;                  // returns 6
 ```
 
+Functions can also be chained using the `$` operator instead of long parenthesis chains, like this:
+```gearbox
+// assuming f1 and f2 are functions of the type (int) -> int
+f1 $ f2 12;
+
+// Same as this
+f1 (f2 12);
+```
+
 ## Function Types and Type Parameters
 You can either declare types in the variable storing the function or in the function itself. Hell, even both if you want. If you define it in the function, it will be passed to the variable holding it.
 ```gearbox
@@ -77,11 +94,7 @@ let in_both:(int, int)->int = (a:int, b:int)[]->int => a + b;
 let implicit = (a, b)[] => a + b;
 ```
 
-Some parts of function typing are not required, while others are. For example, return can be implicit like so:
-```gearbox
-let implicit_return = (a:int, b:int)[] = a + b;
-```
-
+Return type can generally be omitted, except in special cases. It's generally ideal to specify if you're using a sizeable return type (ex: you might want only `int16`, but the compiler might give you `int32`)
 
 Type parameters are also enabled, though the syntax might be different than what you're used to.
 ``` gearbox
@@ -120,4 +133,45 @@ loop loopName => {
     // code
     break loopName;
 }
+```
+
+## Type definitions and traits
+Types are simple:
+```gearbox
+type Point {
+    x:int,
+    y:int,
+}
+```
+
+Traits and `impl` blocks are also existent, and quite similar to Rust.
+```gearbox
+impl Point {
+    let new = (x:int, y:int)[] -> Point => {
+        Point { x, y };
+    }
+    let translate = (x:int, y:int)[*self] => {
+        self->x += x; 
+        self->y += y;
+    }
+
+    let rot_cw = ()[*self] => {
+        self->x = self->y;
+        self->y = -(self->x);
+    }
+}
+
+trait Show for Point {
+    let show = ()[*self] -> String => fmt "%d, %d" [self->x, self->y]; 
+}
+```
+
+After both of these, we can now do things like this:
+```gearbox
+let p = Point#new 12 12;
+p.translate 1 2;
+p.rot_cw;
+
+// print automatically calls p.show
+print p;
 ```

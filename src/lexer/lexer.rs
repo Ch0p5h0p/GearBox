@@ -29,6 +29,7 @@ pub fn read_tokens(code: &str) -> Vec<Result<Token, LexerError>> {
             ';' => Ok(Token::new(Semicolon, ";".to_string(), line)),
             ':' => Ok(Token::new(Colon, ":".to_string(), line)),
             '*' => Ok(Token::new(Star, "*".to_string(), line)),
+            '$' => Ok(Token::new(Dollar, "$".to_string(), line)),
 
             // Single- or double-char tokens
             '!' => {
@@ -176,7 +177,8 @@ pub fn read_tokens(code: &str) -> Vec<Result<Token, LexerError>> {
 
                 let result = loop {
                     if code_chars.peek().is_none()
-                        || !code_chars.peek().unwrap().is_ascii_alphanumeric()
+                        || !(code_chars.peek().unwrap().is_ascii_alphanumeric()
+                            || code_chars.peek() == Some(&'_'))
                     {
                         break Ok(Token::new(
                             IdentifierLit,

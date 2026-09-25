@@ -15,6 +15,7 @@ pub enum TokenType {
     Colon,
     Slash,
     Star,
+    Dollar,
 
     // One or two char tokens
     Bang,
@@ -74,5 +75,24 @@ impl Token {
 
     pub fn get_lexeme(&self) -> String {
         self.lexeme.clone()
+    }
+}
+
+pub fn print_token_table(tokens: Vec<Token>) {
+    for (i, token) in tokens.iter().enumerate() {
+        print!(
+            "{:08}  {:<16} {:<20}",
+            i,
+            token.get_type(),
+            format!("{:?}", token.get_lexeme())
+        );
+
+        if (i + 1) % 3 == 0 {
+            println!();
+        }
+    }
+
+    if tokens.len() % 3 != 0 {
+        println!();
     }
 }
